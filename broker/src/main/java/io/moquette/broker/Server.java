@@ -337,6 +337,27 @@ public class Server {
     }
 
     /**
+     * Returns true if the server has started and is running, false otherwise.
+     * @return
+     */
+    public boolean isRunning() {
+        return initialized;
+    }
+
+    /**
+     * Close the connection for a client based on their clientId
+     * @param clientID The clientId of the connection to close
+     */
+    public void close(String clientID) {
+        final Session session = sessions.retrieve(clientID);
+
+        if (session != null) {
+            session.closeImmediately();
+            session.disconnect();
+        }
+    }
+
+    /**
      * SPI method used by Broker embedded applications to get list of subscribers. Returns null if
      * the broker is not started.
      *
