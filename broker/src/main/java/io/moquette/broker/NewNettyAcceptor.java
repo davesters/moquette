@@ -286,7 +286,7 @@ class NewNettyAcceptor {
 
         final MoquetteIdleTimeoutHandler timeoutHandler = new MoquetteIdleTimeoutHandler();
 
-        String host = props.getProperty(BrokerConstants.HOST_PROPERTY_NAME);
+        String host = props.getProperty(BrokerConstants.WEBSOCKET_HOST_PROPERTY_NAME);
         String path = props.getProperty(BrokerConstants.WEB_SOCKET_PATH_PROPERTY_NAME, BrokerConstants.WEBSOCKET_PATH);
         int maxFrameSize = props.intProp(BrokerConstants.WEB_SOCKET_MAX_FRAME_SIZE_PROPERTY_NAME, 65536);
         initFactory(host, port, "Websocket MQTT", new PipelineInitializer() {
@@ -319,7 +319,7 @@ class NewNettyAcceptor {
         LOG.debug("Starting SSL on port {}", sslPort);
 
         final MoquetteIdleTimeoutHandler timeoutHandler = new MoquetteIdleTimeoutHandler();
-        String host = props.getProperty(BrokerConstants.HOST_PROPERTY_NAME);
+        String host = props.getProperty(SSL_HOST_PROPERTY_NAME);
         String sNeedsClientAuth = props.getProperty(BrokerConstants.NEED_CLIENT_AUTH, "false");
         final boolean needsClientAuth = Boolean.valueOf(sNeedsClientAuth);
         initFactory(host, sslPort, SSL_MQTT_PROTO, new PipelineInitializer() {
@@ -344,7 +344,7 @@ class NewNettyAcceptor {
         }
         int sslPort = Integer.parseInt(sslPortProp);
         final MoquetteIdleTimeoutHandler timeoutHandler = new MoquetteIdleTimeoutHandler();
-        String host = props.getProperty(BrokerConstants.HOST_PROPERTY_NAME);
+        String host = props.getProperty(BrokerConstants.WSS_HOST_PROPERTY_NAME);
         String path = props.getProperty(BrokerConstants.WEB_SOCKET_PATH_PROPERTY_NAME, BrokerConstants.WEBSOCKET_PATH);
         int maxFrameSize = props.intProp(BrokerConstants.WEB_SOCKET_MAX_FRAME_SIZE_PROPERTY_NAME, 65536);
         String sNeedsClientAuth = props.getProperty(BrokerConstants.NEED_CLIENT_AUTH, "false");

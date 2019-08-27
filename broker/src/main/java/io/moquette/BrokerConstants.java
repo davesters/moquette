@@ -27,6 +27,9 @@ public final class BrokerConstants {
     public static final String PASSWORD_FILE_PROPERTY_NAME = "password_file";
     public static final String PORT_PROPERTY_NAME = "port";
     public static final String HOST_PROPERTY_NAME = "host";
+    public static final String SSL_HOST_PROPERTY_NAME = "ssl_host";
+    public static final String WEBSOCKET_HOST_PROPERTY_NAME = "ws_host";
+    public static final String WSS_HOST_PROPERTY_NAME = "wss_host";
     public static final String DEFAULT_MOQUETTE_STORE_H2_DB_FILENAME = "moquette_store.h2";
     public static final String DEFAULT_PERSISTENT_PATH = System.getProperty("user.dir") + File.separator
             + DEFAULT_MOQUETTE_STORE_H2_DB_FILENAME;
@@ -62,6 +65,9 @@ public final class BrokerConstants {
     public static final String WEBSOCKET_PATH = "/mqtt";
     public static final String DISABLED_PORT_BIND = "disabled";
     public static final String HOST = "0.0.0.0";
+    public static final String SSL_HOST = "0.0.0.0";
+    public static final String WEBSOCKET_HOST = "0.0.0.0";
+    public static final String WSS_HOST = "0.0.0.0";
     public static final String NEED_CLIENT_AUTH = "need_client_auth";
     public static final String NETTY_SO_BACKLOG_PROPERTY_NAME = "netty.so_backlog";
     public static final String NETTY_SO_REUSEADDR_PROPERTY_NAME = "netty.so_reuseaddr";

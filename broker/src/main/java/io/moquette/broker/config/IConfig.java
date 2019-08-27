@@ -47,6 +47,9 @@ public abstract class IConfig {
     void assignDefaults() {
         setProperty(BrokerConstants.PORT_PROPERTY_NAME, Integer.toString(BrokerConstants.PORT));
         setProperty(BrokerConstants.HOST_PROPERTY_NAME, BrokerConstants.HOST);
+        setProperty(BrokerConstants.SSL_HOST_PROPERTY_NAME, BrokerConstants.SSL_HOST);
+        setProperty(BrokerConstants.WEBSOCKET_HOST_PROPERTY_NAME, BrokerConstants.WEBSOCKET_HOST);
+        setProperty(BrokerConstants.WSS_HOST_PROPERTY_NAME, BrokerConstants.WSS_HOST);
         // setProperty(BrokerConstants.WEB_SOCKET_PORT_PROPERTY_NAME,
         // Integer.toString(BrokerConstants.WEBSOCKET_PORT));
         setProperty(BrokerConstants.PASSWORD_FILE_PROPERTY_NAME, "");
