@@ -337,6 +337,14 @@ public class Server {
     }
 
     /**
+     * Returns true if the server has started and is running, false otherwise.
+     * @return
+     */
+    public boolean isRunning() {
+        return initialized;
+    }
+
+    /**
      * SPI method used by Broker embedded applications to get list of subscribers. Returns null if
      * the broker is not started.
      *
