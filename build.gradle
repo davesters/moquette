@@ -4,7 +4,7 @@ allprojects  {
   apply plugin: 'maven-publish'
 
   group = 'io.moquette'
-  version = '0.13.9-SNAPSHOT'
+  version = '0.13.10-SNAPSHOT'
 }
 
 buildscript {
@@ -106,7 +106,7 @@ subprojects {
       myPublication(MavenPublication) {
         groupId 'io.moquette'
         artifactId 'moquette'
-        version '0.13.9-SNAPSHOT'
+        version '0.13.10-SNAPSHOT'
         artifact "build/libs/${project.name}-all-${version}.jar"
       }
     }
