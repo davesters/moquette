@@ -411,8 +411,7 @@ final class MQTTConnection {
             ChannelFuture channelFuture;
             if (brokerConfig.isImmediateBufferFlush()) {
                 channelFuture = channel.writeAndFlush(msg);
-            }
-            else {
+            } else {
                 channelFuture = channel.write(msg);
             }
             channelFuture.addListener(FIRE_EXCEPTION_ON_FAILURE);
@@ -505,5 +504,10 @@ final class MQTTConnection {
 
     InetSocketAddress remoteAddress() {
         return (InetSocketAddress) channel.remoteAddress();
+    }
+
+    public void readCompleted() {
+        // TODO drain all messages in target's session in-flight message queue
+        postOffice.flushInFlight(this);
     }
 }
