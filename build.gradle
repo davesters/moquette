@@ -1,9 +1,10 @@
 allprojects  {
+  apply plugin: 'java'
   apply plugin: 'maven'
   apply plugin: 'maven-publish'
 
   group = 'io.moquette'
-  version = '0.13-SNAPSHOT'
+  version = '0.13.9-SNAPSHOT'
 }
 
 buildscript {
@@ -25,6 +26,9 @@ subprojects {
   repositories {
     mavenLocal()
 
+    maven {
+      url 'https://buddy-platform.pkgs.visualstudio.com/_packaging/airstreampkg/maven/v1'
+    }
     maven { url "https://repo.eclipse.org/content/repositories/paho-releases/" }
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     maven { url "https://repo.maven.apache.org/maven2" }
@@ -55,6 +59,17 @@ subprojects {
   task sourceJar (type : Jar) {
     classifier = 'sources'
     from sourceSets.main.allSource
+  }
+
+  task fatJar(type: Jar) {
+    manifest {
+      attributes 'Implementation-Title': 'Gradle Jar File Example',
+              'Implementation-Version': version,
+              'Main-Class': 'com.mkyong.DateUtils'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
   }
 
   // summarize artifacts
@@ -88,26 +103,22 @@ subprojects {
   // publication to maven repo
   publishing {
     publications {
-      bintrayPublication(MavenPublication) {
-        from components.java
-        groupId "$project.group"
-        artifactId "${project.name}"
-        version '0.13-SNAPSHOT'
+      myPublication(MavenPublication) {
+        groupId 'io.moquette'
+        artifactId 'moquette'
+        version '0.13.9-SNAPSHOT'
+        artifact "build/libs/${project.name}-all-${version}.jar"
       }
     }
-  }
 
-  bintray {
-    println "Bintray deploy with user [${System.getenv('BINTRAY_USER')}] while working on ${project.name}"
-    user = System.getenv('BINTRAY_USER')
-    key = System.getenv('BINTRAY_KEY')
-    pkg {
-      repo = 'maven'//"${project.group}"
-      name = "${project.group}.${project.name}"
-      userOrg = 'andsel'
-      licenses = ['Apache-2.0']
-      vcsUrl = "https://api.bintray.com/maven/andsel/maven/${project.group}.${project.name}"
-      publications = ['bintrayPublication']
+    repositories {
+      maven {
+        url 'https://buddy-platform.pkgs.visualstudio.com/_packaging/airstreampkg/maven/v1'
+        credentials {
+          username "AZURE_ARTIFACTS"
+          password System.getenv("AZURE_ARTIFACTS_ENV_ACCESS_TOKEN")
+        }
+      }
     }
   }
 }

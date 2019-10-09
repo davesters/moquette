@@ -87,6 +87,10 @@ public class SessionRegistry {
             final boolean success = previous == null;
 
             if (success) {
+                if (msg.variableHeader().isCleanSession()) {
+                    unsubscribe(newSession);
+                }
+
                 LOG.trace("case 1, not existing session with CId {}", clientId);
             } else {
                 postConnectAction = bindToExistingSession(mqttConnection, msg, clientId, newSession);
@@ -234,6 +238,13 @@ public class SessionRegistry {
     }
 
     public void remove(String clientID) {
+        final Session session = retrieve(clientID);
+        if (session == null) {
+            LOG.debug("Some other thread already removed the session CId={}", clientID);
+            return;
+        }
+
+        unsubscribe(session);
         pool.remove(clientID);
     }
 
