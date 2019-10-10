@@ -252,24 +252,20 @@ final class MQTTConnection {
         }
         LOG.info("Notifying connection lost event. CId: {}, channel: {}", clientID, channel);
 
-        try {
-            Session session = sessionRegistry.retrieve(clientID);
-            if (session.hasWill()) {
-                postOffice.fireWill(session.getWill());
-            }
-            if (session.isClean()) {
-                sessionRegistry.remove(clientID);
-            } else {
-                sessionRegistry.disconnect(clientID);
-            }
-            connected = false;
-            //dispatch connection lost to intercept.
-            String userName = NettyUtils.userName(channel);
-            postOffice.dispatchConnectionLost(clientID, userName);
-            LOG.trace("dispatch disconnection: clientId={}, userName={}", clientID, userName);
-        } catch (Exception exception) {
-            LOG.debug("Error disconnecting client {}: {}", clientID, exception.getMessage());
+        Session session = sessionRegistry.retrieve(clientID);
+        if (session.hasWill()) {
+            postOffice.fireWill(session.getWill());
         }
+        if (session.isClean()) {
+            sessionRegistry.remove(clientID);
+        } else {
+            sessionRegistry.disconnect(clientID);
+        }
+        connected = false;
+        //dispatch connection lost to intercept.
+        String userName = NettyUtils.userName(channel);
+        postOffice.dispatchConnectionLost(clientID, userName);
+        LOG.trace("dispatch disconnection: clientId={}, userName={}", clientID, userName);
     }
 
     void sendConnAck(boolean isSessionAlreadyPresent) {
